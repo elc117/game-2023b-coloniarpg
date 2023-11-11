@@ -16,22 +16,29 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.coloniarpg.game.AssetUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;    
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 // Classe que cria a tela de menu principal
 // Com um botão de play e O titulo do jogo no centro da tela
+// Ao clicar no botão de play, a tela de seleção de mapa é chamada
+// Os elementos presentes na tela são carregados em AssetUtils.java
 public class MainMenuScreen implements Screen {
+    // Variáveis estáticas para armazenar a largura e altura da janela
     public static float windowWidth;
     public static float windowHeight;
 
+    // Variáveis privadas para armazenar o batch, background, stage e game
     private SpriteBatch batch;
     private Texture background;
     private Stage stage;
     private Game game;
 
+    // Construtor da classe
     public MainMenuScreen(Game game) {
         this.game = game;
     }
 
+    // Método que inicializa os elementos da tela
     @Override
     public void show() {
         AssetUtils.initAssets();
@@ -41,24 +48,46 @@ public class MainMenuScreen implements Screen {
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
 
+        // Calcula a posição do botão de play e do titulo
         float playButtonX = windowWidth / 2 - AssetUtils.playButton.getWidth() / 2;
-        float playButtonY = 25;
+        float playButtonY = 105;
         float titleX = windowWidth / 2 - AssetUtils.title.getWidth() / 2;
-        float titleY = windowHeight - AssetUtils.title.getHeight() - 25;
+        float titleY = windowHeight - AssetUtils.title.getHeight();
 
+        // Cria o botão de play
         TextureRegionDrawable playButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.playButton));
-        ImageButton playButton = new ImageButton(playButtonDrawable);
+        TextureRegionDrawable playButtonHighlightDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.playButtonHighlight));
+        final ImageButton playButton = new ImageButton(playButtonDrawable);
+
         playButton.setPosition(playButtonX, playButtonY);
+        playButton.getStyle().imageOver = playButtonHighlightDrawable;
+        playButton.getStyle().imageUp = playButtonDrawable;
         playButton.addListener(new InputListener(){
+            // Método que muda a escala do botão de play quando o mouse está sobre ele
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                playButton.getImage().setScale(1.15f);
+                playButton.getImage().setOrigin(playButton.getImage().getWidth() / 2, playButton.getImage().getHeight() / 2);
+            }
+            
+            // Método que muda a escala do botão de play quando o mouse sai dele
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                playButton.getImage().setScale(1f);
+            }
+
+            // Método que muda a tela para a tela de seleção de mapa quando o botão de play é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //game.setScreen(new SelectMapScreen(game));
+                game.setScreen(new SelectMapScreen(game));
                 return true;
             }
         });
 
         Image title = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.title)));
         title.setPosition(titleX, titleY);
+        title.setScale(0.85f);
+        title.setOrigin(title.getWidth() / 2, title.getHeight() / 2);
 
         stage.addActor(title);
         stage.addActor(playButton);
@@ -66,10 +95,11 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    // Método que renderiza os elementos da tela
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1); // Limpa a tela
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Limpa o buffer de cores
 
         batch.begin();
         batch.draw(background, 0, 0);
@@ -78,22 +108,28 @@ public class MainMenuScreen implements Screen {
         stage.draw();
     }
 
+    // Método que redimensiona a tela
     @Override
     public void resize(int width, int height) { }
 
+    // Método que pausa a tela
     @Override
     public void pause() { }
 
+    // Método que retoma a tela
     @Override
     public void resume() { }
 
+    // Método que esconde a tela
     @Override
     public void hide() { }
 
+    // Método que descarta os elementos da tela
     @Override
     public void dispose() {
         AssetUtils.title.dispose();
         AssetUtils.playButton.dispose();
+        AssetUtils.playButtonHighlight.dispose();
         AssetUtils.backgroundMenu.dispose();
         batch.dispose();
     }
