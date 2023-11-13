@@ -7,6 +7,10 @@ public class AssetUtils {
     public static Texture playButtonHighlight;
     public static Texture title;
     public static Texture backgroundMenu;
+    public static Texture selectLevelText;
+    public static Texture levelButton1;
+    public static Texture levelButton2;
+    public static Texture levelButton3;
 
     private AssetUtils() {
     }
@@ -20,5 +24,9 @@ public class AssetUtils {
         playButtonHighlight = new Texture("play_button_highlighted.png");
         title = new Texture("tittle_game.png");
         backgroundMenu = new Texture("bg_mainmenu.jpg");
+        selectLevelText = new Texture("select_level_text.png");
+        levelButton1 = new Texture("level_button_1.png");
+        levelButton2 = new Texture("level_button_1.png");
+        levelButton3 = new Texture("level_button_1.png");
     }
 }

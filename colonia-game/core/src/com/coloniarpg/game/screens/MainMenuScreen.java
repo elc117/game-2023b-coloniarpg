@@ -84,6 +84,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        // Cria o titulo do jogo
         Image title = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.title)));
         title.setPosition(titleX, titleY);
         title.setScale(0.85f);
