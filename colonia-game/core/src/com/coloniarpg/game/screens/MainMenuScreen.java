@@ -41,7 +41,17 @@ public class MainMenuScreen implements Screen {
         this.game = game;
     }
 
+    // private void startInitialScreenTransition() {
+    //     MainMenuScreen MainMenuScreenInstance = this;
+    //     FadeScreen.FadeInfo fadeIn = new FadeScreen.FadeInfo(FadeScreen.FadeType.IN, Color.WHITE, Interpolation.smoother, 1.5f);
+    //     fadeScreen = new FadeScreen(game, fadeIn, null, MainMenuScreenInstance);
+    //     game.setScreen(fadeScreen);
+    // }
+
     private void startScreenTransition() {
+        SelectMapScreen SelectMapScreenInstance = new SelectMapScreen(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, SelectMapScreenInstance);
         game.setScreen(fadeScreen);
     }
 
@@ -55,19 +65,13 @@ public class MainMenuScreen implements Screen {
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
 
-        MainMenuScreen MainMenuScreenInstance = this;
-        SelectMapScreen SelectMapScreenInstance = new SelectMapScreen(game);
-
-        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.WHITE, Interpolation.smoother, 2f);
-        FadeScreen.FadeInfo fadeIn = new FadeScreen.FadeInfo(FadeScreen.FadeType.IN, Color.WHITE, Interpolation.smoother, 2f);
-
-        fadeScreen = new FadeScreen(game, fadeOut, MainMenuScreenInstance, new FadeScreen(game, fadeIn, SelectMapScreenInstance, null));
-
         // Calcula a posição do botão de play e do titulo
         float playButtonX = windowWidth / 2 - AssetUtils.playButton.getWidth() / 2;
         float playButtonY = 105;
         float titleX = windowWidth / 2 - AssetUtils.title.getWidth() / 2;
         float titleY = windowHeight - AssetUtils.title.getHeight();
+
+        // startInitialScreenTransition();
 
         // Cria o botão de play
         TextureRegionDrawable playButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.playButton));
@@ -96,6 +100,7 @@ public class MainMenuScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 // game.setScreen(new SelectMapScreen(game));
                 startScreenTransition();
+
                 return true;
             }
         });
@@ -149,7 +154,7 @@ public class MainMenuScreen implements Screen {
         AssetUtils.title.dispose();
         AssetUtils.playButton.dispose();
         AssetUtils.playButtonHighlight.dispose();
-        AssetUtils.backgroundMenu.dispose();
+        //AssetUtils.backgroundMenu.dispose();
         batch.dispose();
     }
 }

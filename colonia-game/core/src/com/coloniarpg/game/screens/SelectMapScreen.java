@@ -155,7 +155,7 @@ public class SelectMapScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1); // Limpa a tela
+        Gdx.gl.glClearColor(0, 0, 0, 1); // Limpa a tela
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Limpa o buffer de cores
 
         batch.begin();
