@@ -17,9 +17,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.coloniarpg.game.AssetUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;    
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.coloniarpg.game.screens.ScreenTransition;
 
 // Classe que cria a tela de menu principal
 // Com um botão de play e O titulo do jogo no centro da tela
@@ -35,8 +32,6 @@ public class MainMenuScreen implements Screen {
     private Texture background;
     private Stage stage;
     private Game game;
-    private ScreenTransition transition;
-    private ShapeRenderer ShapeRenderer;
 
     // Construtor da classe
     public MainMenuScreen(Game game) {
@@ -52,7 +47,6 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
-        ShapeRenderer = new ShapeRenderer();
 
         // Calcula a posição do botão de play e do titulo
         float playButtonX = windowWidth / 2 - AssetUtils.playButton.getWidth() / 2;
@@ -85,7 +79,7 @@ public class MainMenuScreen implements Screen {
             // Método que muda a tela para a tela de seleção de mapa quando o botão de play é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                startTransition();
+                
                 return true;
             }
         });
@@ -100,13 +94,6 @@ public class MainMenuScreen implements Screen {
         stage.addActor(playButton);
 
         Gdx.input.setInputProcessor(stage);
-
-        startTransition();
-    }
-
-    // Método que inicia a transição da tela
-    private void startTransition() {
-        transition = new ScreenTransition();
     }
 
     // Método que renderiza os elementos da tela
@@ -117,20 +104,6 @@ public class MainMenuScreen implements Screen {
 
         batch.begin();
         batch.draw(background, 0, 0);
-        batch.end();
-
-        if (transition != null) {
-            transition.update(delta);
-            if (transition.isFinished()) {
-                game.setScreen(new SelectMapScreen(game));
-            }
-        }
-
-        batch.begin();
-        ShapeRenderer.begin(ShapeType.Filled);
-        ShapeRenderer.setColor(0, 0, 0, transition != null ? 1 - transition.getAlpha() : 0);
-        ShapeRenderer.rect(0, 0, windowWidth, windowHeight);
-        ShapeRenderer.end();
         batch.end();
 
         stage.act(delta);
