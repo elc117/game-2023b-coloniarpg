@@ -41,13 +41,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
     }
 
-    // private void startInitialScreenTransition() {
-    //     MainMenuScreen MainMenuScreenInstance = this;
-    //     FadeScreen.FadeInfo fadeIn = new FadeScreen.FadeInfo(FadeScreen.FadeType.IN, Color.WHITE, Interpolation.smoother, 1.5f);
-    //     fadeScreen = new FadeScreen(game, fadeIn, null, MainMenuScreenInstance);
-    //     game.setScreen(fadeScreen);
-    // }
-
+    // Método que inicia a transição de tela
     private void startScreenTransition() {
         SelectMapScreen SelectMapScreenInstance = new SelectMapScreen(game);
         FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);

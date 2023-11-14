@@ -3,10 +3,12 @@ package com.coloniarpg.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -31,10 +33,35 @@ public class SelectMapScreen implements Screen {
     private Texture background;
     private Stage stage;
     private Game game;
+    private FadeScreen fadeScreen;
 
     // Construtor da classe
     public SelectMapScreen(Game game) {
         this.game = game;
+    }
+
+    // Método que inicia a transição de tela
+    private void startScreenBattle1Transition() {
+        BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
+        game.setScreen(fadeScreen);
+    }
+
+    // Método que inicia a transição de tela
+    private void startScreenBattle2Transition() {
+        BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
+        game.setScreen(fadeScreen);
+    }
+
+    // Método que inicia a transição de tela
+    private void startScreenBattle3Transition() {
+        BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
+        game.setScreen(fadeScreen);
     }
 
     // Método que inicializa os elementos da tela
@@ -82,7 +109,7 @@ public class SelectMapScreen implements Screen {
             // Método que muda a tela para a tela de jogo quando o botão de level 1 é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //game.setScreen(new GameScreen(game, 1));
+                startScreenBattle1Transition();
                 return true;
             }
         });
@@ -109,7 +136,7 @@ public class SelectMapScreen implements Screen {
             // Método que muda a tela para a tela de jogo quando o botão de level 2 é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //game.setScreen(new GameScreen(game, 1));
+                startScreenBattle2Transition();
                 return true;
             }
         });
@@ -136,7 +163,7 @@ public class SelectMapScreen implements Screen {
             // Método que muda a tela para a tela de jogo quando o botão de level 3 é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //game.setScreen(new GameScreen(game, 1));
+                startScreenBattle3Transition();
                 return true;
             }
         });
