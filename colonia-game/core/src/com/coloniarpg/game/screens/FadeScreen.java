@@ -7,6 +7,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -41,7 +42,40 @@ public class FadeScreen extends ScreenAdapter {
         this.screen = screen;
         this.next = next;
         shapeRenderer = new ShapeRenderer();
-        camera = new OrthographicCamera(Gdx.graphics.getWidth())
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0f);
+        camera.update();
+    }
+
+    private void renderFade() {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        float f = Math.min(1f, elapsed / fade.duration);
+        float opacity = fade.type == FadeType.OUT ? fade.interpolation.apply(f) : 1f - fade.interpolation.apply(f);
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(fade.color.r, fade.color.g, fade.color.b, opacity);
+        shapeRenderer.rect(0, 0, camera.viewportWidth, camera.viewportHeight);
+        shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
+    }
+
+    public void render (float delta) {
+        if (screen != null) {
+            elapsed += delta;
+            if (elapsed >= fade.duration) {
+                if (next != null) {
+                    game.setScreen(next);
+                    screen.dispose();
+                    screen = null;
+                } else {
+                    game.setScreen(screen);
+                }
+            }
+        }
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        if (screen != null) screen.render(delta);
+        renderFade();
     }
 
 }

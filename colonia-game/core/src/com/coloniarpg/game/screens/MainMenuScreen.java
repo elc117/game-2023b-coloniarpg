@@ -4,10 +4,12 @@ package com.coloniarpg.game.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,10 +34,15 @@ public class MainMenuScreen implements Screen {
     private Texture background;
     private Stage stage;
     private Game game;
+    private FadeScreen fadeScreen;
 
     // Construtor da classe
     public MainMenuScreen(Game game) {
         this.game = game;
+    }
+
+    private void startScreenTransition() {
+        game.setScreen(fadeScreen);
     }
 
     // Método que inicializa os elementos da tela
@@ -47,6 +54,14 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
+
+        MainMenuScreen MainMenuScreenInstance = this;
+        SelectMapScreen SelectMapScreenInstance = new SelectMapScreen(game);
+
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.WHITE, Interpolation.smoother, 2f);
+        FadeScreen.FadeInfo fadeIn = new FadeScreen.FadeInfo(FadeScreen.FadeType.IN, Color.WHITE, Interpolation.smoother, 2f);
+
+        fadeScreen = new FadeScreen(game, fadeOut, MainMenuScreenInstance, new FadeScreen(game, fadeIn, SelectMapScreenInstance, null));
 
         // Calcula a posição do botão de play e do titulo
         float playButtonX = windowWidth / 2 - AssetUtils.playButton.getWidth() / 2;
@@ -79,7 +94,8 @@ public class MainMenuScreen implements Screen {
             // Método que muda a tela para a tela de seleção de mapa quando o botão de play é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                
+                // game.setScreen(new SelectMapScreen(game));
+                startScreenTransition();
                 return true;
             }
         });
@@ -95,6 +111,7 @@ public class MainMenuScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
     }
+
 
     // Método que renderiza os elementos da tela
     @Override
