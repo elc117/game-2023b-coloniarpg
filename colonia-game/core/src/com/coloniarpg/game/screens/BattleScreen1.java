@@ -37,7 +37,7 @@ public class BattleScreen1 implements Screen {
 
         float avatarX = 120;
         float avatarY = 120;
-        float enemyX = windowWidth - 220;
+        float enemyX = windowWidth - 480;
         float enemyY = windowHeight - 420;
 
         Image avatar = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.avatar)));

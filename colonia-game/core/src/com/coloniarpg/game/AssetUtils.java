@@ -17,6 +17,7 @@ public class AssetUtils {
     public static Texture avatar;
     public static Texture enemyDino;
     public static Texture enemyDinoAtack;
+    public static Texture enemyJacare;
 
     private AssetUtils() {
     }
@@ -40,5 +41,6 @@ public class AssetUtils {
         avatar = new Texture("avatar.png");
         enemyDino = new Texture("enemy_dino.png");
         enemyDinoAtack = new Texture("enemy_dino_atack.png");
+        enemyJacare = new Texture("enemy_jacare.png");
     }
 }
