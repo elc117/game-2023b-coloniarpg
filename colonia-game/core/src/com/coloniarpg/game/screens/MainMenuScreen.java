@@ -44,7 +44,7 @@ public class MainMenuScreen implements Screen {
     // Método que inicia a transição de tela
     private void startScreenTransition() {
         SelectMapScreen SelectMapScreenInstance = new SelectMapScreen(game);
-        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
         fadeScreen = new FadeScreen(game, fadeOut, this, SelectMapScreenInstance);
         game.setScreen(fadeScreen);
     }
