@@ -43,24 +43,24 @@ public class SelectMapScreen implements Screen {
     // Método que inicia a transição de tela
     private void startScreenBattle1Transition() {
         BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
-        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
         fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
         game.setScreen(fadeScreen);
     }
 
     // Método que inicia a transição de tela
     private void startScreenBattle2Transition() {
-        BattleScreen2 BattleScreenInstance = new BattleScreen2(game);
-        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
+        BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
         fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
         game.setScreen(fadeScreen);
     }
 
     // Método que inicia a transição de tela
     private void startScreenBattle3Transition() {
-        //BattleScreen3 BattleScreenInstance = new BattleScreen3(game);
-        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
-        //fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
+        BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1.5f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
         game.setScreen(fadeScreen);
     }
 
