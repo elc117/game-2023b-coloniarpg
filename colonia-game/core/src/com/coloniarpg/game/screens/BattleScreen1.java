@@ -43,7 +43,7 @@ public class BattleScreen1 implements Screen {
         Image avatar = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.avatar)));
         avatar.setPosition(avatarX, avatarY);
         
-        Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemy)));
+        Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemyDino)));
         enemy.setPosition(enemyX, enemyY);
 
         stage.addActor(avatar);
@@ -81,7 +81,7 @@ public class BattleScreen1 implements Screen {
     public void dispose() {
         AssetUtils.backgroundBattle.dispose();
         AssetUtils.avatar.dispose();
-        AssetUtils.enemy.dispose();
+        AssetUtils.enemyDino.dispose();
         batch.dispose();
     }
 }
