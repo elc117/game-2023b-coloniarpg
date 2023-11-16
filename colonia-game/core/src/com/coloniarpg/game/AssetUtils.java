@@ -13,7 +13,7 @@ public class AssetUtils {
     public static Texture levelButton2;
     public static Texture levelButton3;
 
-    public static Texture backgroundBattle;
+    public static Texture backgroundBattle1;
     public static Texture avatar;
     public static Texture enemyDino;
     public static Texture enemyDinoAtack;
@@ -37,7 +37,7 @@ public class AssetUtils {
         levelButton2 = new Texture("level_button_1.png");
         levelButton3 = new Texture("level_button_1.png");
 
-        backgroundBattle = new Texture("bg_battle.jpg");
+        backgroundBattle1 = new Texture("bg_battle_1.png");
         avatar = new Texture("avatar.png");
         enemyDino = new Texture("enemy_dino.png");
         enemyDinoAtack = new Texture("enemy_dino_atack.png");

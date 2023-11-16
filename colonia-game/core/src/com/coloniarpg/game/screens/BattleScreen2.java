@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.coloniarpg.game.AssetUtils;
 
-public class BattleScreen1 implements Screen {
+public class BattleScreen2 implements Screen {
     public static float windowWidth;
     public static float windowHeight;
     
@@ -22,7 +22,7 @@ public class BattleScreen1 implements Screen {
     private Stage stage;
     private Game game;
 
-    public BattleScreen1(Game game) {
+    public BattleScreen2(Game game) {
         this.game = game;
     }
 
@@ -35,15 +35,15 @@ public class BattleScreen1 implements Screen {
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
 
-        float avatarX = 10;
-        float avatarY = 10;
-        float enemyX = windowWidth - 440;
-        float enemyY = windowHeight - 480;
+        float avatarX = 120;
+        float avatarY = 120;
+        float enemyX = windowWidth - 380;
+        float enemyY = windowHeight - 420;
 
         Image avatar = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.avatar)));
         avatar.setPosition(avatarX, avatarY);
         
-        Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemyDino)));
+        Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemyJacare)));
         enemy.setPosition(enemyX, enemyY);
 
         stage.addActor(avatar);
@@ -81,7 +81,7 @@ public class BattleScreen1 implements Screen {
     public void dispose() {
         AssetUtils.backgroundBattle1.dispose();
         AssetUtils.avatar.dispose();
-        AssetUtils.enemyDino.dispose();
+        AssetUtils.enemyJacare.dispose();
         batch.dispose();
     }
 }
