@@ -59,8 +59,9 @@ public class SelectMapScreen implements Screen {
     // Método que inicia a transição de tela
     private void startScreenBattle3Transition() {
         //BattleScreen3 BattleScreenInstance = new BattleScreen3(game);
+        QuestionScreen1 BattleScreenInstance = new QuestionScreen1(game);
         FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
-        //fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
+        fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
         game.setScreen(fadeScreen);
     }
 
