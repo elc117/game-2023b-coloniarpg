@@ -53,15 +53,15 @@ public class QuestionScreen1 implements Screen {
                 "Answer 3",
                 "Answer 4",
 
-                "Answer 1",
-                "Answer 2",
-                "Answer 3",
-                "Answer 4",
+                "Answer 11",
+                "Answer 22",
+                "Answer 33",
+                "Answer 44",
 
-                "Answer 1",
-                "Answer 2",
-                "Answer 3",
-                "Answer 4",
+                "Answer 111",
+                "Answer 222",
+                "Answer 333",
+                "Answer 444",
 
                 "Answer 1",
                 "Answer 2",
@@ -76,8 +76,8 @@ public class QuestionScreen1 implements Screen {
 
         correctAnswers = new String[] {
                 "Answer 1",
-                "Answer 2",
-                "Answer 3",
+                "Answer 22",
+                "Answer 333",
                 "Answer 4",
                 "Answer 1",
         };
@@ -114,7 +114,7 @@ public class QuestionScreen1 implements Screen {
         // Label tittleLabel = new Label("Perguntas", style);
         // tittleLabel.setPosition(windowWidth / 2, windowHeight - 20);
         // stage.addActor(tittleLabel);
-        final int FinalI = i;
+        final int FinalI = BattleScreen1.indexPergunta;
         Label questionLabel = new Label(questions[FinalI], style);
         questionLabel.setPosition(windowWidth / 2 - 50, windowHeight - 60);
         stage.addActor(questionLabel);
@@ -130,15 +130,13 @@ public class QuestionScreen1 implements Screen {
                 public void clicked(InputEvent event, float x, float y) {
                     if (answers[FinalI * 4 + FinalJ].equals(correctAnswers[FinalI])) {
                         System.out.println("Acertou");
-                        i++;
                         BattleScreen1.vidaInimigo--;
-                        startScreenBattle1Transition();
                     } else {
                         System.out.println("Errou");
-                        i++;
                         BattleScreen1.vidaAvatar--;
-                        startScreenBattle1Transition();
                     }
+                    BattleScreen1.indexPergunta++;
+                    startScreenBattle1Transition();
                 }
             });
             stage.addActor(answerButton);

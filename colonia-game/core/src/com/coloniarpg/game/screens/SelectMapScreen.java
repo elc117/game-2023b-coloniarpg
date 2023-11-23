@@ -77,7 +77,7 @@ public class SelectMapScreen implements Screen {
 
         // Calcula a posição dos elementos da tela de seleção de level
         // e atribui os valores de scale para os botões
-        final float scaleGrow = 1.1f;
+        final float scaleGrow = 1.05f;
         final float scaleNormal = 1f;
         float textSelectLevelX = windowWidth / 2 - AssetUtils.selectLevelText.getWidth() / 2;
         float textSelectLevelY = windowHeight - AssetUtils.selectLevelText.getHeight() - 20;

@@ -30,13 +30,13 @@ public class BattleScreen1 implements Screen {
 
     public static int vidaAvatar = 3;
     public static int vidaInimigo = 3;
+    public static int indexPergunta = 0;
 
     public BattleScreen1(Game game) {
         this.game = game;
     }
 
     private void startQuestionScreenTransition() {
-        //BattleScreen3 BattleScreenInstance = new BattleScreen3(game);
         QuestionScreen1 QuestionScreenInstance = new QuestionScreen1(game);
         FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
         fadeScreen = new FadeScreen(game, fadeOut, this, QuestionScreenInstance);
@@ -56,8 +56,8 @@ public class BattleScreen1 implements Screen {
         float avatarY = 10;
         float enemyX = windowWidth - 440;
         float enemyY = windowHeight - 480;
-        float battleButtonX = 200;
-        float battleButtonY = windowHeight - 100;
+        float battleButtonX = 150;
+        float battleButtonY = windowHeight - 200;
 
         TextureRegionDrawable battleButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.answerButton));
         ImageButton battleButton = new ImageButton(battleButtonDrawable);
