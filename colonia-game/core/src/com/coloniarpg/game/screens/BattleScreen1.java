@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.coloniarpg.game.AssetUtils;
@@ -52,6 +55,11 @@ public class BattleScreen1 implements Screen {
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
 
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(2);
+        Color color = Color.BLACK;
+        LabelStyle style = new LabelStyle(font, color);
+
         float avatarX = 10;
         float avatarY = 10;
         float enemyX = windowWidth - 440;
@@ -72,13 +80,19 @@ public class BattleScreen1 implements Screen {
             }   
         });
 
+        Label vidaAvatarLabel = new Label("VidaA: " + vidaAvatar, style);
+        vidaAvatarLabel.setPosition(avatarX / 2 + 20, avatarY / 2 + 140);
         Image avatar = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.avatar)));
         avatar.setPosition(avatarX, avatarY);
         
+        Label vidaInimigoLabel = new Label("VidaI: " + vidaInimigo, style);
+        vidaInimigoLabel.setPosition(enemyX + 100, enemyY + 350);
         Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemyDino)));
         enemy.setPosition(enemyX, enemyY);
 
         stage.addActor(battleButton);
+        stage.addActor(vidaAvatarLabel);
+        stage.addActor(vidaInimigoLabel);
         stage.addActor(avatar);
         stage.addActor(enemy);
         
