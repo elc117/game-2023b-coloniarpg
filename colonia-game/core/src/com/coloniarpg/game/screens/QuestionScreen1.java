@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,6 +29,8 @@ public class QuestionScreen1 implements Screen {
     private Texture background;
     private Stage stage;
     private Game game;
+    private FadeScreen fadeScreen;
+
     private String[] questions;
     private String[] answers;
     private String[] correctAnswers;
@@ -81,6 +84,13 @@ public class QuestionScreen1 implements Screen {
 
     }
 
+    private void startScreenBattle1Transition() {
+        BattleScreen1 BattleScreenInstance = new BattleScreen1(game);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
+        game.setScreen(fadeScreen);
+    }
+
     @Override
     public void show() {
         AssetUtils.initAssets();
@@ -91,13 +101,14 @@ public class QuestionScreen1 implements Screen {
         windowHeight = Gdx.graphics.getHeight();
 
         BitmapFont font = new BitmapFont();
+        font.getData().setScale(3);
         Color color = Color.WHITE;
         LabelStyle style = new LabelStyle(font, color);
 
-        Drawable upDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("answer_button.png")));
+        //Drawable upDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("answer_button.png")));
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = upDrawable;
-        textButtonStyle.down = upDrawable;
+        //textButtonStyle.up = upDrawable;
+        //textButtonStyle.down = upDrawable;
         textButtonStyle.font = font;
 
         // Label tittleLabel = new Label("Perguntas", style);
@@ -105,29 +116,36 @@ public class QuestionScreen1 implements Screen {
         // stage.addActor(tittleLabel);
         final int FinalI = i;
         Label questionLabel = new Label(questions[FinalI], style);
-        questionLabel.setPosition(windowWidth / 2, windowHeight - 40);
+        questionLabel.setPosition(windowWidth / 2 - 50, windowHeight - 60);
         stage.addActor(questionLabel);
 
-        int height = 200;
+        int height = 300;
         for (int j = 0; j < 4; j++) {
             final int FinalJ = j;
-             
+
             TextButton answerButton = new TextButton(answers[FinalI * 4 + FinalJ], textButtonStyle);
-            answerButton.setPosition(windowWidth / 2 - AssetUtils.answerButton.getWidth() / 2, windowHeight - height);
-            stage.addActor(answerButton);
+            answerButton.setPosition(windowWidth / 2 - 50/* AssetUtils.answerButton.getWidth() / 2*/, windowHeight - height);
             answerButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (answers[FinalI * 4 + FinalJ].equals(correctAnswers[FinalI])) {
                         System.out.println("Acertou");
+                        i++;
+                        BattleScreen1.vidaInimigo--;
+                        startScreenBattle1Transition();
                     } else {
                         System.out.println("Errou");
+                        i++;
+                        BattleScreen1.vidaAvatar--;
+                        startScreenBattle1Transition();
                     }
                 }
             });
+            stage.addActor(answerButton);
 
             height += 100;
         }
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -161,9 +179,9 @@ public class QuestionScreen1 implements Screen {
 
     @Override
     public void dispose() {
-        AssetUtils.backgroundBattle1.dispose();
-        AssetUtils.avatar.dispose();
-        AssetUtils.enemyDino.dispose();
-        batch.dispose();
+        // AssetUtils.backgroundBattle1.dispose();
+        // AssetUtils.avatar.dispose();
+        // AssetUtils.enemyDino.dispose();
+        // batch.dispose();
     }
 }

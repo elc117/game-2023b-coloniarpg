@@ -20,6 +20,7 @@ public class AssetUtils {
     public static Texture enemyJacare;
 
     public static Texture answerButton;
+    public static Texture battleButton;
 
     private AssetUtils() {
     }
@@ -46,5 +47,6 @@ public class AssetUtils {
         enemyJacare = new Texture("enemy_jacare.png");
 
         answerButton = new Texture("answer_button.png");
+        battleButton = new Texture("answer_button.png");
     }
 }
