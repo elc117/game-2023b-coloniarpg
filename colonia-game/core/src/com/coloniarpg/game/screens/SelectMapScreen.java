@@ -221,6 +221,6 @@ public class SelectMapScreen implements Screen {
         AssetUtils.levelButton1.dispose();
         AssetUtils.levelButton2.dispose();
         AssetUtils.levelButton3.dispose();
-        //AssetUtils.backgroundMenu.dispose();
+        // AssetUtils.backgroundMenu.dispose();
     }
 }

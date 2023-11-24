@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -56,21 +58,38 @@ public class BattleScreen2 implements Screen {
         windowHeight = Gdx.graphics.getHeight();
 
         BitmapFont font = new BitmapFont();
-        font.getData().setScale(2);
-        Color color = Color.BLACK;
+        font.getData().setScale(3);
+        Color color = Color.WHITE;
         LabelStyle style = new LabelStyle(font, color);
 
-        float avatarX = 10;
-        float avatarY = 10;
+        float avatarX = 30;
+        float avatarY = 30;
         float enemyX = windowWidth - 380;
         float enemyY = windowHeight - 500;
-        float battleButtonX = 150;
-        float battleButtonY = windowHeight - 200;
+        float attackButtonX = windowWidth / 2 - AssetUtils.attackButton.getWidth() / 2;
+        float attackButtonY = 40;
 
-        TextureRegionDrawable battleButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.answerButton));
-        ImageButton battleButton = new ImageButton(battleButtonDrawable);
-        battleButton.setPosition(battleButtonX, battleButtonY);
-        battleButton.addListener(new InputListener() {
+        TextureRegionDrawable attackButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.attackButton));
+        TextureRegionDrawable attackButtonHighlightDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.attackButtonHighlight));
+        final ImageButton attackButton = new ImageButton(attackButtonDrawable);
+        attackButton.setPosition(attackButtonX, attackButtonY);
+        attackButton.getStyle().imageOver = attackButtonHighlightDrawable;
+        attackButton.getStyle().imageUp = attackButtonDrawable;
+        attackButton.addListener(new InputListener() {
+            // Método que muda a escala do botão de ataque quando o mouse está sobre ele
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                attackButton.getImage().setScale(1.15f);
+                attackButton.getImage().setOrigin(attackButton.getImage().getWidth() / 2, attackButton.getImage().getHeight() / 2);
+            }
+            
+            // Método que muda a escala do botão de ataque quando o mouse sai dele
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                attackButton.getImage().setScale(1f);
+            }
+
+            // Método que inicia a transição de tela quando o botão de ataque é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 startQuestionScreenTransition();
@@ -79,21 +98,38 @@ public class BattleScreen2 implements Screen {
             }   
         });
 
-        Label vidaAvatarLabel = new Label("VidaA: " + vidaAvatar, style);
-        vidaAvatarLabel.setPosition(avatarX / 2 + 20, avatarY / 2 + 140);
+        Image heart1 = new Image(AssetUtils.heart);
+        Label vidaAvatarLabel = new Label("" + vidaAvatar, style);
+
+        Group vidaAvatarGroup = new Group();
+        vidaAvatarGroup.addActor(heart1);
+        vidaAvatarGroup.addActor(vidaAvatarLabel);
+        
+        vidaAvatarLabel.setPosition(heart1.getWidth() / 2 - vidaAvatarLabel.getWidth() / 2, heart1.getHeight() / 2 - vidaAvatarLabel.getHeight() / 2);
+        vidaAvatarGroup.setPosition(avatarX + 40, avatarY);
+
         Image avatar = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.avatar)));
         avatar.setPosition(avatarX, avatarY);
         
-        Label vidaInimigoLabel = new Label("VidaI: " + vidaInimigo, style);
-        vidaInimigoLabel.setPosition(enemyX + 55, enemyY + 290);
+
+        Image heart2 = new Image(AssetUtils.heart);
+        Label vidaInimigoLabel = new Label("" + vidaInimigo, style);
+
+        Group vidaInimigoGroup = new Group();
+        vidaInimigoGroup.addActor(heart2);
+        vidaInimigoGroup.addActor(vidaInimigoLabel);
+
+        vidaInimigoLabel.setPosition(heart2.getWidth() / 2 - vidaInimigoLabel.getWidth() / 2, heart2.getHeight() / 2 - vidaInimigoLabel.getHeight() / 2);
+        vidaInimigoGroup.setPosition(enemyX, enemyY);
+
         Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemyJacare)));
         enemy.setPosition(enemyX, enemyY);
 
-        stage.addActor(battleButton);
-        stage.addActor(vidaAvatarLabel);
-        stage.addActor(vidaInimigoLabel);
         stage.addActor(avatar);
         stage.addActor(enemy);
+        stage.addActor(attackButton);
+        stage.addActor(vidaAvatarGroup);
+        stage.addActor(vidaInimigoGroup);
         
         Gdx.input.setInputProcessor(stage);
     }
@@ -126,7 +162,7 @@ public class BattleScreen2 implements Screen {
     @Override
     public void dispose() {
         AssetUtils.backgroundBattle1.dispose();
-        AssetUtils.avatar.dispose();
+        //AssetUtils.avatar.dispose();
         AssetUtils.enemyJacare.dispose();
         batch.dispose();
     }

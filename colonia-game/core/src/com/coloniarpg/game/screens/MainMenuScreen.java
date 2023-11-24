@@ -65,8 +65,6 @@ public class MainMenuScreen implements Screen {
         float titleX = windowWidth / 2 - AssetUtils.title.getWidth() / 2;
         float titleY = windowHeight - AssetUtils.title.getHeight();
 
-        // startInitialScreenTransition();
-
         // Cria o botão de play
         TextureRegionDrawable playButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.playButton));
         TextureRegionDrawable playButtonHighlightDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.playButtonHighlight));
@@ -148,7 +146,7 @@ public class MainMenuScreen implements Screen {
         AssetUtils.title.dispose();
         AssetUtils.playButton.dispose();
         AssetUtils.playButtonHighlight.dispose();
-        //AssetUtils.backgroundMenu.dispose();
+        // AssetUtils.backgroundMenu.dispose();
         batch.dispose();
     }
 }

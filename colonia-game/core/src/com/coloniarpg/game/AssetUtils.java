@@ -21,7 +21,9 @@ public class AssetUtils {
     public static Texture enemyJacare;
 
     public static Texture answerButton;
-    public static Texture battleButton;
+    public static Texture attackButton;
+    public static Texture attackButtonHighlight;
+    public static Texture heart;
 
     private AssetUtils() {
     }
@@ -48,7 +50,9 @@ public class AssetUtils {
         enemyDinoAtack = new Texture("enemy_dino_atack.png");
         enemyJacare = new Texture("enemy_jacare.png");
 
-        answerButton = new Texture("answer_button.png");
-        //battleButton = new Texture("answer_button.png");
+        //answerButton = new Texture("answer_button.png");
+        attackButton = new Texture("attack_button.png");
+        attackButtonHighlight = new Texture("attack_button_highlighted.png");
+        heart = new Texture("heart.png");
     }
 }
