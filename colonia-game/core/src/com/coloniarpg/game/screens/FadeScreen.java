@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class FadeScreen extends ScreenAdapter {
-    public enum FadeType { IN, OUT}
+    public enum FadeType { IN, OUT} 
 
     public static class FadeInfo {
         public final FadeType type;

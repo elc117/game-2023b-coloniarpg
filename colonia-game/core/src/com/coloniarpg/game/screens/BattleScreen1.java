@@ -24,27 +24,48 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.coloniarpg.game.AssetUtils;
 
 public class BattleScreen1 implements Screen {
+    // Variáveis estáticas para armazenar a largura e altura da janela
     public static float windowWidth;
     public static float windowHeight;
     
+    // Variáveis privadas para armazenar o batch, background, stage e game
     private SpriteBatch batch;
     private Texture background;
     private Stage stage;
     private Game game;
     private FadeScreen fadeScreen;
 
+    // Variáveis estáticas para armazenar a vida do avatar e do inimigo e o index da pergunta
     public static int vidaAvatar = 3;
     public static int vidaInimigo = 3;
     public static int indexPergunta = 0;
 
+    // Construtor da classe
     public BattleScreen1(Game game) {
         this.game = game;
     }
 
+    // Método que inicia a transição de tela de questão
     private void startQuestionScreenTransition() {
-        QuestionScreen1 QuestionScreenInstance = new QuestionScreen1(game);
+        QuestionScreen1 QuestionScreenInstance = new QuestionScreen1(game, 1);
         FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
         fadeScreen = new FadeScreen(game, fadeOut, this, QuestionScreenInstance);
+        game.setScreen(fadeScreen);
+    }
+
+    // Métodos que iniciam a transição de tela de texto de morto
+    private void startTextScreenTransitionDead() {
+        TextScreen TextScreenInstance = new TextScreen(game, true);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, TextScreenInstance);
+        game.setScreen(fadeScreen);
+    }
+
+    // Métodos que iniciam a transição de tela de texto de vivo
+    private void startTextScreenTransitionAlive() {
+        TextScreen TextScreenInstance = new TextScreen(game, false);
+        FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
+        fadeScreen = new FadeScreen(game, fadeOut, this, TextScreenInstance);
         game.setScreen(fadeScreen);
     }
 
@@ -57,18 +78,21 @@ public class BattleScreen1 implements Screen {
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
 
+        // Cria a fonte e o estilo do texto
         BitmapFont font = new BitmapFont();
         font.getData().setScale(3);
         Color color = Color.WHITE;
         LabelStyle style = new LabelStyle(font, color);
 
-        float avatarX = 30;
-        float avatarY = 30;
+        // Posições dos elementos na tela
+        float avatarX = 0;
+        float avatarY = 0;
         float enemyX = windowWidth - 440;
         float enemyY = windowHeight - 480;
         float attackButtonX = windowWidth / 2 - AssetUtils.attackButton.getWidth() / 2;
         float attackButtonY = 40 ;
 
+        // Cria o botão de ataque
         TextureRegionDrawable attackButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.attackButton));
         TextureRegionDrawable attackButtonHighlightDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.attackButtonHighlight));
         final ImageButton attackButton = new ImageButton(attackButtonDrawable);
@@ -97,6 +121,8 @@ public class BattleScreen1 implements Screen {
                 return true;
             }   
         });
+
+        // Cria o avatar e o inimigo juntamente com sua vida
         Image heart1 = new Image(AssetUtils.heart);
         Label vidaAvatarLabel = new Label("" + vidaAvatar, style);
 
@@ -109,6 +135,8 @@ public class BattleScreen1 implements Screen {
 
         Image avatar = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.avatar)));
         avatar.setPosition(avatarX, avatarY);
+        avatar.setScale(2f);
+        
         
 
         Image heart2 = new Image(AssetUtils.heart);
@@ -124,6 +152,7 @@ public class BattleScreen1 implements Screen {
         Image enemy = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.enemyDino)));
         enemy.setPosition(enemyX, enemyY);
 
+        // Adiciona os elementos na tela
         stage.addActor(avatar);
         stage.addActor(enemy);
         stage.addActor(attackButton);
@@ -131,12 +160,26 @@ public class BattleScreen1 implements Screen {
         stage.addActor(vidaInimigoGroup);
         
         Gdx.input.setInputProcessor(stage);
+
+        // Verifica se o avatar ou o inimigo morreu
+        if (vidaAvatar == 0) {
+            vidaAvatar = 3;
+            vidaInimigo = 3;
+            indexPergunta = 0;
+            startTextScreenTransitionDead();
+
+        } else if (vidaInimigo == 0) {
+            vidaAvatar = 3;
+            vidaInimigo = 3;
+            indexPergunta = 0;
+            startTextScreenTransitionAlive();
+        }
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1); // Limpa a tela
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Limpa o buffer de cores
 
         batch.begin();
         batch.draw(background, 0, 0);
@@ -161,7 +204,6 @@ public class BattleScreen1 implements Screen {
     @Override
     public void dispose() {
         AssetUtils.backgroundBattle1.dispose();
-        //AssetUtils.avatar.dispose();
         AssetUtils.enemyDino.dispose();
         batch.dispose();
     }

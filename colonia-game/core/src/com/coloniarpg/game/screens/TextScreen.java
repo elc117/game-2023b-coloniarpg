@@ -1,6 +1,5 @@
 package com.coloniarpg.game.screens;
 
-//import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,21 +9,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.coloniarpg.game.AssetUtils;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;    
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-// Classe que cria a tela de menu principal
-// Com um botão de play e O titulo do jogo no centro da tela
-// Ao clicar no botão de play, a tela de seleção de mapa é chamada
-// Os elementos presentes na tela são carregados em AssetUtils.java
-public class MainMenuScreen implements Screen {
+public class TextScreen implements Screen {
     // Variáveis estáticas para armazenar a largura e altura da janela
     public static float windowWidth;
     public static float windowHeight;
@@ -35,21 +30,23 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private Game game;
     private FadeScreen fadeScreen;
+    private boolean dead;
 
-    // Construtor da classe
-    public MainMenuScreen(Game game) {
+    // Construtor da tela de texto
+    public TextScreen(Game game, boolean dead) {
         this.game = game;
+        this.dead = dead;
     }
 
-    // Método que inicia a transição de tela
-    private void startScreenTransition() {
+    // Método que inicia a transição para a tela de seleção de mapa
+    private void startSelectMapScreenTransition() {
         SelectMapScreen SelectMapScreenInstance = new SelectMapScreen(game);
         FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
         fadeScreen = new FadeScreen(game, fadeOut, this, SelectMapScreenInstance);
         game.setScreen(fadeScreen);
     }
 
-    // Método que inicializa os elementos da tela
+    // Método que mostra a tela
     @Override
     public void show() {
         AssetUtils.initAssets();
@@ -59,11 +56,24 @@ public class MainMenuScreen implements Screen {
         windowWidth = Gdx.graphics.getWidth();
         windowHeight = Gdx.graphics.getHeight();
 
-        // Calcula a posição do botão de play e do titulo
+        // Posições do botão de play
         float playButtonX = windowWidth / 2 - AssetUtils.playButton.getWidth() / 2;
         float playButtonY = 85;
-        float titleX = windowWidth / 2 - AssetUtils.title.getWidth() / 2;
-        float titleY = windowHeight - AssetUtils.title.getHeight() - 60;
+
+        if (dead) { // Se o jogador morreu, cria o texto de perdeu
+            Image text = new Image(new TextureRegionDrawable(AssetUtils.perdeuText));
+            text.setPosition(windowWidth / 2 - AssetUtils.perdeuText.getWidth() / 2, windowHeight / 2 - AssetUtils.perdeuText.getHeight() / 2 + 110);
+            text.setScale(3);
+            text.setOrigin(text.getWidth() / 2, text.getHeight() / 2);
+            stage.addActor(text);
+
+        } else { // Se o jogador venceu, cria o texto de venceu
+            Image text = new Image(new TextureRegionDrawable(AssetUtils.venceuText));
+            text.setPosition(windowWidth / 2 - AssetUtils.venceuText.getWidth() / 2, windowHeight / 2 - AssetUtils.venceuText.getHeight() / 2 + 110);
+            text.setScale(3);
+            text.setOrigin(text.getWidth() / 2, text.getHeight() / 2);
+            stage.addActor(text);
+        }
 
         // Cria o botão de play
         TextureRegionDrawable playButtonDrawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.playButton));
@@ -90,26 +100,17 @@ public class MainMenuScreen implements Screen {
             // Método que muda a tela para a tela de seleção de mapa quando o botão de play é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                startScreenTransition();
+                // game.setScreen(new SelectMapScreen(game));
+                startSelectMapScreenTransition();
 
                 return true;
             }
         });
-
-        // Cria o titulo do jogo
-        Image title = new Image(new TextureRegionDrawable(new TextureRegion(AssetUtils.title)));
-        title.setPosition(titleX, titleY);
-        title.setScale(1.335f);
-        title.setOrigin(title.getWidth() / 2, title.getHeight() / 2);
-
-        stage.addActor(title);
         stage.addActor(playButton);
 
         Gdx.input.setInputProcessor(stage);
     }
 
-
-    // Método que renderiza os elementos da tela
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1); // Limpa a tela
@@ -125,24 +126,27 @@ public class MainMenuScreen implements Screen {
 
     // Método que redimensiona a tela
     @Override
-    public void resize(int width, int height) { }
+    public void resize(int width, int height) {
+    }
 
     // Método que pausa a tela
     @Override
-    public void pause() { }
+    public void pause() {
+    }
 
     // Método que retoma a tela
     @Override
-    public void resume() { }
+    public void resume() {
+    }
 
     // Método que esconde a tela
     @Override
-    public void hide() { }
+    public void hide() {
+    }
 
-    // Método que descarta os elementos da tela
+    // Método que libera a memória dos objetos que não são mais utilizados
     @Override
     public void dispose() {
-        AssetUtils.title.dispose();
         batch.dispose();
         stage.dispose();
     }
