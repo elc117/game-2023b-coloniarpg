@@ -200,12 +200,12 @@ public class QuestionScreen1 implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         // Se a resposta for correta
                         if (answers[FinalI1 * 4 + FinalJ].equals(correctAnswers[FinalI1])) {
-                            System.out.println("Acertou");
                             BattleScreen1.vidaInimigo--;
+                            AssetUtils.songCorrect.play();
 
                         } else {
-                            System.out.println("Errou");
                             BattleScreen1.vidaAvatar--;
+                            AssetUtils.songWrong.play();
                         }
                         
                         BattleScreen1.indexPergunta++;
@@ -222,12 +222,12 @@ public class QuestionScreen1 implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         // Se a resposta for correta
                         if (answers[FinalI2 * 4 + FinalJ].equals(correctAnswers[FinalI2])) {
-                            System.out.println("Acertou");
                             BattleScreen2.vidaInimigo--;
+                            AssetUtils.songCorrect.play();
 
                         } else {
-                            System.out.println("Errou");
                             BattleScreen2.vidaAvatar--;
+                            AssetUtils.songWrong.play();
                         }
                         if (battleScreen == 2){
                             BattleScreen2.indexPergunta++;

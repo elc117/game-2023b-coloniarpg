@@ -56,15 +56,6 @@ public class SelectMapScreen implements Screen {
         game.setScreen(fadeScreen);
     }
 
-    // Método que inicia a transição de tela
-    // private void startScreenBattle3Transition() {
-    //     //BattleScreen3 BattleScreenInstance = new BattleScreen3(game);
-    //     QuestionScreen1 BattleScreenInstance = new QuestionScreen1(game);
-    //     FadeScreen.FadeInfo fadeOut = new FadeScreen.FadeInfo(FadeScreen.FadeType.OUT, Color.BLACK, Interpolation.smoother, 1f);
-    //     fadeScreen = new FadeScreen(game, fadeOut, this, BattleScreenInstance);
-    //     game.setScreen(fadeScreen);
-    // }
-
     // Método que inicializa os elementos da tela
     @Override
     public void show() {
@@ -86,9 +77,6 @@ public class SelectMapScreen implements Screen {
 
         float levelButton2X = windowWidth - 200 - AssetUtils.levelButton2.getWidth();
         float levelButton2Y = windowHeight / 2 - AssetUtils.levelButton2.getHeight() / 2;
-
-        // float levelButton3X = 60 + AssetUtils.levelButton1.getWidth() * 2;
-        // float levelButton3Y = windowHeight / 2 - AssetUtils.levelButton3.getHeight() / 2;
 
         // Cria o botão de level 1
         TextureRegionDrawable levelButton1Drawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.levelButton1));
@@ -112,6 +100,7 @@ public class SelectMapScreen implements Screen {
             // Método que muda a tela para a tela de jogo quando o botão de level 1 é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AssetUtils.songButton.play();
                 startScreenBattle1Transition();
                 return true;
             }
@@ -139,37 +128,12 @@ public class SelectMapScreen implements Screen {
             // Método que muda a tela para a tela de jogo quando o botão de level 2 é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AssetUtils.songButton.play();
                 startScreenBattle2Transition();
+
                 return true;
             }
         });
-
-        // Cria o botão de level 3
-        // TextureRegionDrawable levelButton3Drawable = new TextureRegionDrawable(new TextureRegion(AssetUtils.levelButton3));
-        // final ImageButton levelButton3 = new ImageButton(levelButton3Drawable);
-
-        // levelButton3.setPosition(levelButton3X, levelButton3Y);
-        // levelButton3.addListener(new InputListener(){
-        //     // Método que muda a escala do botão de level 3 quando o mouse está sobre ele
-        //     @Override
-        //     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-        //         levelButton3.getImage().setScale(scaleGrow);
-        //         levelButton3.getImage().setOrigin(levelButton3.getImage().getWidth() / 2, levelButton3.getImage().getHeight() / 2);
-        //     }
-
-        //     // Método que muda a escala do botão de level 3 quando o mouse sai de cima dele
-        //     @Override
-        //     public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-        //         levelButton3.getImage().setScale(scaleNormal);;
-        //     }
-
-        //     // Método que muda a tela para a tela de jogo quando o botão de level 3 é clicado
-        //     @Override
-        //     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        //         startScreenBattle3Transition();
-        //         return true;
-        //     }
-        // });
 
         // Cria o texto de seleção de level
         Image textSelectLevel = new Image(new TextureRegionDrawable(AssetUtils.selectLevelText));

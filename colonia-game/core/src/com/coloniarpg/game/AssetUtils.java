@@ -1,5 +1,7 @@
 package com.coloniarpg.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class AssetUtils {
@@ -25,6 +27,10 @@ public class AssetUtils {
 
     public static Texture venceuText;
     public static Texture perdeuText;
+
+    public static Sound songCorrect;
+    public static Sound songWrong;
+    public static Sound songButton;
 
     private AssetUtils() {
     }
@@ -56,5 +62,39 @@ public class AssetUtils {
 
         venceuText = new Texture("text_venceu.png");
         perdeuText = new Texture("text_perdeu.png");
+
+        songCorrect = Gdx.audio.newSound(Gdx.files.internal("song_correct.mp3"));
+        songWrong = Gdx.audio.newSound(Gdx.files.internal("song_wrong.mp3"));
+        songButton = Gdx.audio.newSound(Gdx.files.internal("song_button.mp3"));
+    }
+
+
+    public static void dispose() {
+        playButton.dispose();
+        playButtonHighlight.dispose();
+        title.dispose();
+        backgroundMenu.dispose();
+
+        selectLevelText.dispose();
+        levelButton1.dispose();
+        levelButton2.dispose();
+
+        backgroundBattle1.dispose();
+        backgroundBattle2.dispose();
+        avatar.dispose();
+        enemyDino.dispose();
+        enemyJacare.dispose();
+
+        answerButton.dispose();
+        attackButton.dispose();
+        attackButtonHighlight.dispose();
+        heart.dispose();
+
+        venceuText.dispose();
+        perdeuText.dispose();
+
+        songCorrect.dispose();
+        songWrong.dispose();
+        songButton.dispose();
     }
 }

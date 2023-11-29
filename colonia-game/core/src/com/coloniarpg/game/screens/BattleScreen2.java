@@ -115,6 +115,7 @@ public class BattleScreen2 implements Screen {
             // Método que inicia a transição de tela quando o botão de ataque é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                AssetUtils.songButton.play();
                 startQuestionScreenTransition();
                 
                 return true;

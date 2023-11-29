@@ -90,6 +90,7 @@ public class MainMenuScreen implements Screen {
             // Método que muda a tela para a tela de seleção de mapa quando o botão de play é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AssetUtils.songButton.play();
                 startScreenTransition();
 
                 return true;

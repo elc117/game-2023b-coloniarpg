@@ -116,6 +116,7 @@ public class BattleScreen1 implements Screen {
             // Método que inicia a transição de tela quando o botão de ataque é clicado
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                AssetUtils.songButton.play();
                 startQuestionScreenTransition();
                 
                 return true;
@@ -203,8 +204,7 @@ public class BattleScreen1 implements Screen {
 
     @Override
     public void dispose() {
-        AssetUtils.backgroundBattle1.dispose();
-        AssetUtils.enemyDino.dispose();
+        stage.dispose();
         batch.dispose();
     }
 }
