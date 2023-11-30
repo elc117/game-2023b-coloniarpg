@@ -63,9 +63,9 @@ public class AssetUtils {
         venceuText = new Texture("text_venceu.png");
         perdeuText = new Texture("text_perdeu.png");
 
-        songCorrect = Gdx.audio.newSound(Gdx.files.internal("song_correct.mp3"));
-        songWrong = Gdx.audio.newSound(Gdx.files.internal("song_wrong.mp3"));
-        songButton = Gdx.audio.newSound(Gdx.files.internal("song_button.mp3"));
+        songCorrect = Gdx.audio.newSound(Gdx.files.internal("./assets/song_correct.mp3"));
+        songWrong = Gdx.audio.newSound(Gdx.files.internal("./assets/song_wrong.mp3"));
+        songButton = Gdx.audio.newSound(Gdx.files.internal("./assets/song_button.mp3"));
     }
 
 
